@@ -6,29 +6,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <script src='./main.js' defer></script>
+  <script src="https://kit.fontawesome.com/a06c8af4dc.js" crossorigin="anonymous"></script>
   <title>Todo list</title>
 </head>
 <body>
   <header>
     <div class="logo">
-      <h1 class="page-name">Todo List</h1>
+      <h1 class="page-name"><i class="fas fa-check-double"></i> Todo List</h1>
     </div>
   </header>
   <main class="main">
     <nav class="nav" id="nav">
       <div class="default-projects-list">
-        <button class="button-default-project" id="button-inbox-projects">
-          <i class="fas fa-calendar-day"></i>hello?
+        <!-- Default projects -->
+        <button class="button-default-projects active" id="button-inbox-projects">
+          <i class="fas fa-inbox"></i> Inbox
         </button>
-        <button class="button-default-project" id="button-today-projects"></button>
-        <button class="button-default-project" id="button-week-projects"></button>
+        <button class="button-default-projects" id="button-today-projects">
+          <i class="fas fa-calendar-day"></i> Today
+        </button>
+        <button class="button-default-projects" id="button-week-projects">
+          <i class="fas fa-calendar-week"></i> This week
+        </button>
+      </div>
+      <!-- User projects -->
+      <h2 class="project-titles">Projects</h2>
+      <div class="projects-list">
+        <h2 id="title">Inbox</h2>
+        
       </div>
     </nav>
+    <!-- Tasks -->
     <div class="project-preview" id="project-preview"></div>
   </main>
   <footer class="footer">
-    <p class="copyright">Copyright © 2021 mabilog</p>
-    <a href="http://github.com/mabilog" class="github-link"></a>
+    <p class="copyright">Copyright © 2021 mabilog </p>
+    <a href="http://github.com/mabilog" class="github-link"> <i class="fab fa-github"></i></a>
   </footer>
 </body>
 </html>
