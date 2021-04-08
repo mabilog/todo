@@ -45,7 +45,8 @@ export default class Project {
   }
 
   // returns tasks due for today
-  // by filtering the 
+  // by filtering and getting the formatted date from the Task Class
+  // and returning passing it through the isToday function from date-fns
   getTasksToday() {
     return this.tasks.filter((task) => {
       const taskDate = new Date(task.getDateFormatted());
@@ -53,6 +54,9 @@ export default class Project {
     });
   }
 
+  // returns tasks due for this week
+  // by filtering and getting the formatted date from the Task Class
+  // and returning passing it through the isThisWeek function from date-fns
   getTasksThisWeek() {
     return this.task.filter((task) => {
       const taskDate = new Date(task.getDateFormatted());
