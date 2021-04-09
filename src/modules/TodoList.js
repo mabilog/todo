@@ -36,6 +36,11 @@ export default class TodoList {
     this.projects.splice(this.projects.indexOf(projectToDelete), 1);
   }
 
+  // task: updates today project 
+  // it creates an empty project folder for today
+  // then passes through a condition if the project selected is 'Today' or 'This Week' and then return undefined;
+  // forEach project in the projects array, assign the .getTasksToday() to todayTasks
+  // forEach task in todayTasks, 'Today' project adds new task through the Task class constructor
   updateTodayProject() {
     this.getProject('Today').tasks = [];
 
@@ -50,6 +55,13 @@ export default class TodoList {
     });
   }
 
+  // task: updates this week's project 
+  // it creates an empty project folder for today
+  // then passes through a condition if the project selected is 'Today' or 'This Week' and then return undefined;
+  // forEach project in the projects array, assign the .getTasksThisWeek to weekTasks
+  // forEach task in weekTasks, 'This Week' project adds new task through the Task class constructor
+
+  // also sorts this weeks tasks in ascending order
   updateWeekProject() {
     this.getProject('This Week').tasks = [];
 
