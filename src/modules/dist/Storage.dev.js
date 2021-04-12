@@ -44,6 +44,7 @@ function () {
           return Object.assign(new _Task["default"](), task);
         }));
       });
+      return todoList;
     }
   }]);
 
