@@ -61,7 +61,6 @@ export default class TodoList {
   // forEach project in the projects array, assign the .getTasksThisWeek to weekTasks
   // forEach task in weekTasks, 'This Week' project adds new task through the Task class constructor
 
-  // also sorts this weeks tasks in ascending order
   updateWeekProject() {
     this.getProject('This Week').tasks = [];
 
@@ -75,6 +74,7 @@ export default class TodoList {
       });
     });
 
+    // also sorts this weeks tasks in ascending order
     this.getProject('This Week')
       .setTasks(this.getProject('This Week')
         .getTasks()

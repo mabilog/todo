@@ -95,7 +95,6 @@ function () {
     // then passes through a condition if the project selected is 'Today' or 'This Week' and then return undefined;
     // forEach project in the projects array, assign the .getTasksThisWeek to weekTasks
     // forEach task in weekTasks, 'This Week' project adds new task through the Task class constructor
-    // also sorts this weeks tasks in ascending order
 
   }, {
     key: "updateWeekProject",
@@ -111,7 +110,8 @@ function () {
 
           _this2.getProject('This Week').addTask(new _Task["default"](taskName, task.getDate()));
         });
-      });
+      }); // also sorts this weeks tasks in ascending order
+
       this.getProject('This Week').setTasks(this.getProject('This Week').getTasks().sort(function (a, b) {
         return (0, _dateFns.compareAsc)((0, _dateFns.toDate)(new Date(a.getDateFormated())), (0, _dateFns.toDate)(new Date(b.getDateFormated())));
       }));
