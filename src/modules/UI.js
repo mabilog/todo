@@ -28,6 +28,29 @@ export default class UI {
     UI.initAddProjectButtons()
   }
 
+  static loadTasks(projectName) {
+    Storage.getTodoList()
+      .getProject(projectName)
+      .getTasks()
+      .forEach((task) => UI.createTask(task.name, task.dueDate));
+
+    if (projectName !== 'Today' && projectName !== 'This Week') {
+      UI.initAddTaskButtons();
+    }
+  }
+
+  static loadProjectContent(projectName) {
+    const projectPreview = document.getElementById('project-preview');
+    projectPreview.innerHTML = `
+    <h1 id="project-name">${projectName}</h1>
+    <div class="tasks-list" id="tasks-list"></div>
+    `;
+
+    if (projectName !== 'Today' && projectName !== 'This Week') {
+      projectPreview.innerHTML = `
+      `
+    }
+  }
   static initProjectButtons() {
 
   }
