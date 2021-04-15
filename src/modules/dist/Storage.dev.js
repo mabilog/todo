@@ -46,6 +46,62 @@ function () {
       });
       return todoList;
     }
+  }, {
+    key: "addProject",
+    value: function addProject(project) {
+      var todoList = Storage.getTodoList();
+      todoList.addProject(project);
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "deleteProject",
+    value: function deleteProject(projectName) {
+      var todoList = Storage.getTodoList();
+      todoList.deleteProject(projectName);
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "addTask",
+    value: function addTask(projectName, taskName) {
+      var todoList = Storage.getTodoList();
+      todoList.getProject(projectName).addTask(taskName);
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "deleteTask",
+    value: function deleteTask(projectName, taskName) {
+      var todoList = Storage.getTodoList();
+      todoList.getProject(projectName).deleteTask(taskName);
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "renameTast",
+    value: function renameTast(projectName, taskName, newTaskName) {
+      var todoList = Storage.getTodoList();
+      todoList.getProject(projectName).getTask(taskName).setName(newTaskName);
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "setTaskDate",
+    value: function setTaskDate(projectName, taskName, newDueDate) {
+      var todoList = Storage.getTodoList();
+      todoList.getProject(projectName).getTask(taskName).setDate(newDueDate);
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "updateTodayProject",
+    value: function updateTodayProject() {
+      var todoList = Storage.getTodoList();
+      todoList.updateTodayProject();
+      Storage.saveTodoList(todoList);
+    }
+  }, {
+    key: "updateWeekProject",
+    value: function updateWeekProject() {
+      var todoList = Storage.getTodoList();
+      todoList.updateWeekProject();
+      Storage.saveTodoList(todoList);
+    }
   }]);
 
   return Storage;

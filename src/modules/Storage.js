@@ -31,4 +31,52 @@ export default class Storage {
 
     return todoList;
   }
+
+  static addProject(project) {
+    const todoList = Storage.getTodoList();
+    todoList.addProject(project);
+    Storage.saveTodoList(todoList);
+  }
+
+  static deleteProject(projectName) {
+    const todoList = Storage.getTodoList();
+    todoList.deleteProject(projectName);
+    Storage.saveTodoList(todoList);
+  }
+
+  static addTask(projectName, taskName) {
+    const todoList = Storage.getTodoList();
+    todoList.getProject(projectName).addTask(taskName);
+    Storage.saveTodoList(todoList);
+  }
+
+  static deleteTask(projectName, taskName) {
+    const todoList = Storage.getTodoList();
+    todoList.getProject(projectName).deleteTask(taskName);
+    Storage.saveTodoList(todoList);
+  }
+
+  static renameTast(projectName, taskName, newTaskName) {
+    const todoList = Storage.getTodoList();
+    todoList.getProject(projectName).getTask(taskName).setName(newTaskName);
+    Storage.saveTodoList(todoList);
+  }
+
+  static setTaskDate(projectName, taskName, newDueDate) {
+    const todoList = Storage.getTodoList();
+    todoList.getProject(projectName).getTask(taskName).setDate(newDueDate);
+    Storage.saveTodoList(todoList);
+  }
+
+  static updateTodayProject() {
+    const todoList = Storage.getTodoList();
+    todoList.updateTodayProject();
+    Storage.saveTodoList(todoList);
+  }
+
+  static updateWeekProject() {
+    const todoList = Storage.getTodoList();
+    todoList.updateWeekProject();
+    Storage.saveTodoList(todoList);
+  }
 }
