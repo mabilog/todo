@@ -48,6 +48,15 @@ export default class UI {
 
     if (projectName !== 'Today' && projectName !== 'This Week') {
       projectPreview.innerHTML = `
+      <button class="button-add-task" id="button-add-task">
+        <i class="fas fa-plus"></i>
+        Add Task
+      </button>
+      <div class="add-task-popup" id="add-task-popup">
+        <input
+          class="input-add-task-popup"
+          id="input-add-task-
+      </div>
       `
     }
   }
