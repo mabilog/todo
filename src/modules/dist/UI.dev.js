@@ -132,8 +132,112 @@ function () {
     value: function handleKeyboard(e) {
       if (e.key === 'Escape') UI.closeAllPopups();
     } //PROJECT ADD EVENT LISTENERS
-    // static
 
+  }, {
+    key: "initAddProjectButtons",
+    value: function initAddProjectButtons() {
+      var addProjectButton = document.getElementById('button-add-project');
+      var addProjectPopupButton = document.getElementById('button-add-project-popup');
+      var cancelProjectPopupButton = document.getElementById('button0cancel-project-popup');
+      var addProjectPopupInput = document.getElementById('input-add-project-popup');
+      addProjectButton.addEventListener('click', UI.openAddProjectPopup);
+      addProjectPopupButton.addEventListener('click', UI.addProject);
+      cancelProjectPopupButton.addEventListener('click', UI.closeAddProjectPopup);
+      addProjectPopupInput.addEventListener('keydown', UI.handleAddProjectPopupInput);
+    }
+  }, {
+    key: "openAddProjectPopup",
+    value: function openAddProjectPopup() {
+      var addProjectPopup = document.getElementById('add-project-popup');
+      var addProjectButton = document.getElemetnById('button-add-project');
+      UI.closeAllPopups();
+      addProjectPopup.classList.add('active');
+      addProjectButton.classList.add('active');
+    }
+  }, {
+    key: "closeADdProjectPOpup",
+    value: function closeADdProjectPOpup() {
+      var addProjectPopup = document.getElementById('add-project-popup');
+      var addProjectButton = document.getElementById('button-add-project');
+      var addProjectPopupInput = document.getElementById('input-add-project-popup');
+      addProjectPopup.classList.remove('active');
+      addProjectButton.classList.remove('active');
+      addProjectPopupInput.value = '';
+    }
+  }, {
+    key: "addProject",
+    value: function addProject() {
+      var addProjectPopupInput = document.getElementById('input-add-project-popup');
+      var projectName = addProjectPopupInput.value;
+
+      if (projectName === '') {
+        alert("Project name can't be empty");
+        return;
+      }
+
+      if (_Storage["default"].getTodoList().contains(projectName)) {
+        addProjectPopupInput.value = '';
+        alert('Project names must be different');
+        return;
+      }
+
+      _Storage["default"].addProject(new _Project["default"](projectName));
+
+      UI.createProject(projectName);
+      UI.closeAddProjectPopup();
+    }
+  }, {
+    key: "handleAddProjectPopupInput",
+    value: function handleAddProjectPopupInput(e) {
+      if (e.key === 'Enter') UI.addProject();
+    }
+  }, {
+    key: "initPRojectButtons",
+    value: function initPRojectButtons() {
+      var inboxProjectsButton = document.getElementById('button-inbox-projects');
+      var todayProjectsButton = document.getElementById('button-today-projects');
+      var weekProjectsButton = document.getElementById('button-week-projects');
+      var projectButtons = document.querySelectorAll('[data-project-button]');
+      var openNavButton = document.getElementById('button-open-nav');
+      inboxProjectsButton.addEventListener('click', UI.openInboxTasks);
+      todayProjectsButton.addEventListener('click', UI.openTodayTasks);
+      weekProjectsButton.addEventListener('click', UI.openWeekTasks);
+      projectButtons.forEach(function (projectButton) {
+        projectButton.addEventListener('click', UI.handleProjectButton);
+      });
+      openNavButton.addEventListener('click', UI.openNav);
+    }
+  }, {
+    key: "openInboxTasks",
+    value: function openInboxTasks() {
+      UI.openProject('Inbox', this);
+    }
+  }, {
+    key: "openTodayTasks",
+    value: function openTodayTasks() {
+      _Storage["default"].updateTodayProject();
+
+      UI.openProject('Today', this);
+    }
+  }, {
+    key: "openWeekTasks",
+    value: function openWeekTasks() {
+      _Storage["default"].updateWeekProject();
+
+      UI.openProject('This Week', this);
+    }
+  }, {
+    key: "handleProjectButton",
+    value: function handleProjectButton(e) {
+      var projectName = this.children[0].children[1].textContent;
+
+      if (e.target.classList.contains('fa-times')) {
+        UI.deleteProject(projectName, this);
+        return;
+      }
+
+      UI.openProject(projectName, this);
+    }
   }]);
 
   return UI;
