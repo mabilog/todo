@@ -55,18 +55,103 @@ export default class UI {
       <div class="add-task-popup" id="add-task-popup">
         <input
           class="input-add-task-popup"
-          id="input-add-task-
+          id="input-add-task-popup"
+          type="text"
+        />
+        <div class="add-task-popup-buttons">
+          <button class="button-add-task-popup" id="button-add-task-popup">
+            Add
+          </button>
+          <button
+            class-"button-cancel-task-popup"
+            id="button-cancel-task-popup"
+          >
+          Cancel
+          </button>
+        </div>
       </div>
       `
     }
-  }
-  static initProjectButtons() {
-
+    UI.loadTasks(projectName);
   }
 
-  static openProject() {
+  // CREATING CONTENT
 
+  static createProject(name) {
+    const userProjects = document.getElementById('projects-list');
+    userProjects.innerHTML = + `
+      <button class=button-project" data-project-button>
+        <div class="left-project-panel">
+          <i class="fas fa-tasks></i>  
+          <span>${name}</span>
+        </div>
+        <div class="right-project-panel">
+          <i class="fas fa-times"></i>
+        </div>
+      </button>`;
+    UI.initProjectButtons();
   }
 
-  static init
+  static createTask(name, dueDate) {
+    const tasksList = document.getElementById('tasks-list');
+    tasksList.innerHTML += `
+    <button class="button-task" data-task-button>
+      <div class="left-task-panel">
+        <i class="far fa-circle"></i>
+        <p class="task-content">${name}</p>
+        <input type="text" class="input-task-name" data-input-task-name>
+      </div>
+      <div class="right-task-panel">
+        <p class="due-date" id="due-date">${dueDate}</p>
+        <i class="fas fa-times></i>
+      </div>
+    </button>`;
+
+    UI.initTaskButtons();
+  }
+
+  static clear() {
+    UI.clearProjectPreview();
+    UI.clearProjects();
+    UI.clearTasks();
+  }
+
+  static clearProjectPreview() {
+    const projectPreview = document.getElementById('project-preview');
+    projectPreview.textContent = '';
+  }
+
+  static clearProjects() {
+    const projectsList = document.getElementById('projects-list');
+    projectsList.textContent = '';
+  }
+
+  static clearTasks() {
+    const tasksList = document.getElementById('tasks-list');
+    tasksList.textContent = '';
+  }
+
+  static closeAllPopups() {
+    UI.closeAddProjectPopup();
+    if (document.getElementById('button-add-task')) UI.closeAddTaskPopup();
+    if (document.getElementById('tasks-list') && document.getElementById('tasks-list').innerHTML !== '') UI.closeAllInputs();
+  }
+
+  static closeAllInputs() {
+    const taskButtons = document.querySelectorAll('[data-task-button]');
+
+    taskButtons.forEach(button => {
+      UI.closeRenameInput(button);
+      UI.closeSetDateInput(button);
+    });
+  }
+
+  static handleKeyboard(e) {
+    if (e.key === 'Escape') UI.closeAllPopups();
+  }
+
+  //PROJECT ADD EVENT LISTENERS
+
+  // static
+
 }
