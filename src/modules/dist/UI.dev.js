@@ -15,6 +15,14 @@ var _Task = _interopRequireDefault(require("./Task"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -155,8 +163,8 @@ function () {
       addProjectButton.classList.add('active');
     }
   }, {
-    key: "closeADdProjectPOpup",
-    value: function closeADdProjectPOpup() {
+    key: "closeAddProjectPopup",
+    value: function closeAddProjectPopup() {
       var addProjectPopup = document.getElementById('add-project-popup');
       var addProjectButton = document.getElementById('button-add-project');
       var addProjectPopupInput = document.getElementById('input-add-project-popup');
@@ -192,8 +200,8 @@ function () {
       if (e.key === 'Enter') UI.addProject();
     }
   }, {
-    key: "initPRojectButtons",
-    value: function initPRojectButtons() {
+    key: "initProjectButtons",
+    value: function initProjectButtons() {
       var inboxProjectsButton = document.getElementById('button-inbox-projects');
       var todayProjectsButton = document.getElementById('button-today-projects');
       var weekProjectsButton = document.getElementById('button-week-projects');
@@ -237,6 +245,35 @@ function () {
       }
 
       UI.openProject(projectName, this);
+    }
+  }, {
+    key: "openProject",
+    value: function openProject(projectName, projectButton) {
+      var defaultProjectButtons = docuemtn.querySelectorAll('.button-default-project');
+      var projectButtons = document.querySelectorAll('.button-project');
+      var buttons = [].concat(_toConsumableArray(defaultProjectButtons), _toConsumableArray(projectButtons));
+      buttons.forEach(function (button) {
+        return button.classList.remove('active');
+      });
+      projectButton.classList.add('active');
+      UI.closeAddProjectPopup();
+      UI.loadProjectContent(projectName);
+    }
+  }, {
+    key: "openNav",
+    value: function openNav() {
+      var nav = document.getElementById('nav');
+      UI.closeAllPopups();
+      nav.classList.toggle('active');
+    } // ADD TASK EVENT LISTENERS
+
+  }, {
+    key: "initAddTaskButtons",
+    value: function initAddTaskButtons() {
+      var addTaskButtons = document.getElementById('button-add-task');
+      var addTaskPopupButton = document.getElementById('button-add-task-popup');
+      var cancelTaskPopupButton = document.getElementById('button-cancel-task-popup');
+      var addTaskPopupInput = document.getElementById('input-add-task-popup');
     }
   }]);
 

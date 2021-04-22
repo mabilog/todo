@@ -173,7 +173,7 @@ export default class UI {
     addProjectButton.classList.add('active');
   }
 
-  static closeADdProjectPOpup() {
+  static closeAddProjectPopup() {
     const addProjectPopup = document.getElementById('add-project-popup');
     const addProjectButton = document.getElementById('button-add-project');
     const addProjectPopupInput = document.getElementById('input-add-project-popup');
@@ -207,7 +207,7 @@ export default class UI {
     if (e.key === 'Enter') UI.addProject();
   }
 
-  static initPRojectButtons() {
+  static initProjectButtons() {
     const inboxProjectsButton = document.getElementById('button-inbox-projects');
     const todayProjectsButton = document.getElementById('button-today-projects');
     const weekProjectsButton = document.getElementById('button-week-projects');
@@ -247,5 +247,34 @@ export default class UI {
     }
 
     UI.openProject(projectName, this)
+  }
+
+  static openProject(projectName, projectButton) {
+    const defaultProjectButtons = docuemtn.querySelectorAll('.button-default-project');
+    const projectButtons = document.querySelectorAll('.button-project');
+    const buttons = [...defaultProjectButtons, ...projectButtons];
+
+    buttons.forEach(button => button.classList.remove('active'));
+    projectButton.classList.add('active');
+    UI.closeAddProjectPopup();
+    UI.loadProjectContent(projectName);
+  }
+
+  static openNav() {
+    const nav = document.getElementById('nav');
+
+    UI.closeAllPopups();
+    nav.classList.toggle('active');
+  }
+
+
+  // ADD TASK EVENT LISTENERS
+
+
+  static initAddTaskButtons() {
+    const addTaskButtons = document.getElementById('button-add-task');
+    const addTaskPopupButton = document.getElementById('button-add-task-popup');
+    const cancelTaskPopupButton = document.getElementById('button-cancel-task-popup');
+    const addTaskPopupInput = document.getElementById('input-add-task-popup');
   }
 }
