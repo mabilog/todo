@@ -260,6 +260,16 @@ function () {
       UI.loadProjectContent(projectName);
     }
   }, {
+    key: "deleteProject",
+    value: function deleteProject(projectName, button) {
+      if (button.classList.contains('active')) UI.clearProjectPreview();
+
+      _Storage["default"].deleteProject(projectName);
+
+      UI.clearProjects();
+      UI.loadProjects();
+    }
+  }, {
     key: "openNav",
     value: function openNav() {
       var nav = document.getElementById('nav');

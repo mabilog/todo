@@ -246,7 +246,7 @@ export default class UI {
       return;
     }
 
-    UI.openProject(projectName, this)
+    UI.openProject(projectName, this);
   }
 
   static openProject(projectName, projectButton) {
@@ -258,6 +258,13 @@ export default class UI {
     projectButton.classList.add('active');
     UI.closeAddProjectPopup();
     UI.loadProjectContent(projectName);
+  }
+
+  static deleteProject(projectName, button) {
+    if (button.classList.contains('active')) UI.clearProjectPreview();
+    Storage.deleteProject(projectName);
+    UI.clearProjects();
+    UI.loadProjects();
   }
 
   static openNav() {
