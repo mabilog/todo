@@ -279,9 +279,98 @@ export default class UI {
 
 
   static initAddTaskButtons() {
-    const addTaskButtons = document.getElementById('button-add-task');
+    const addTaskButton = document.getElementById('button-add-task');
     const addTaskPopupButton = document.getElementById('button-add-task-popup');
     const cancelTaskPopupButton = document.getElementById('button-cancel-task-popup');
     const addTaskPopupInput = document.getElementById('input-add-task-popup');
+
+    addTaskButton.addEventListener('click', UI.openAddTaskPopup);
+    addTaskPopupButton.addEventListener('click', UI.addTask);
+    cancelTaskPopupButton.addEventListener('click', UI.closeAddTaskPopup);
+    addTaskPopupInput.addEventListener('keypress', UI.handleAddTaskPopupInput);
   }
+
+  static openAddTaskPopup() {
+    const addTaskPopup = document.getElementById('add-task-popup');
+    const addTaskButton = document.getElementById('button-add-task');
+
+    UI.closeAllPopups();
+    addTaskPopup.classList.add('active');
+    addTaskButton.classList.add('active');
+  }
+
+  static closeAddTaskPopup() {
+    const addTaskPopup = document.getElementById('add-task-popup');
+    const addTaskButton = document.getElementById('button-add-task');
+    const addTaskInput = document.getElementById('input-add-task-popup');
+
+    addTaskPopup.classList.remove('active');
+    addTaskButton.classList.remove('active');
+    addTaskInput.value = '';
+  }
+
+  static addTask() {
+    const projectName = document.getElementById('project-name').textContent;
+    const addTaskPopupInput = document.getElementById('input-add-task-popup');
+    const taskName = addTaskPopupInput.value;
+
+    if (taskName === '') {
+      alert("Task name can't be empty");
+      return;
+    }
+    if (Storage.getTodoList().getProject(projectName).contains(taskName)) {
+      alert("Task names must be different");
+      addTaskPopupInput.value = '';
+      return;
+    }
+
+    Storage.addTask(projectName, new Task(taskName));
+    UI.createTask(taskName, "No Date");
+    UI.closeAddTaskPopup();
+  }
+
+  static handleAddTaskPopupInput(e) {
+    if (e.key === 'Enter') UI.addTask();
+  }
+
+  // TASK EVENT LISTENERS
+
+  static iniTaskButtons() {
+    const taskButtons = document.querySelectorAll('[data-task-button]');
+    const taskNameInputs = document.querySelectorAll('[data-input-task-name]');
+    const dueDateInputs = document.querySelectorAll('[data-input-due-date]');
+
+    taskButtons.forEach(taskButton =>
+      taskButton.addEventListener('click', UI.handleTaskButton));
+    taskNameInputs.forEach(taskNameInput =>
+      taskNameInput.addEventListener('keypress', UI.renameTask));
+    dueDateInputs.forEach(dueDateInput =>
+      dueDateInput.addEventListener('click', UI.setTaskDate));
+  }
+
+  static handleTaskButton(e) {
+    if (e.target.classList.contains('fa-circle')) {
+      UI.setTaskCompleted(this);
+      return;
+    }
+    if (e.target.classList.contains('fa-times')) {
+      UI.deleteTask(this);
+      return;
+    }
+    if (e.target.classList.contains('task-content')) {
+      UI.openRenameInput(this);
+      return;
+    }
+    if (e.target.classList.contains('due-date')) UI.openSetDateInput(this);
+  }
+
+  static setTaskCompleted(taskButton) {
+    const projectName = document.getElementById('project-name').textContent;
+    const taskName = taskButton.children[0].children[1].textContent;
+
+    if (projectName === 'Today' || projectName === 'This Week') {
+      const mainProjectName = taskName.split('('[1].split(')')[0])
+    }
+  }
+
 }

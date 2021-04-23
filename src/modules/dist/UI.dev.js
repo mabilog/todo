@@ -280,10 +280,108 @@ function () {
   }, {
     key: "initAddTaskButtons",
     value: function initAddTaskButtons() {
-      var addTaskButtons = document.getElementById('button-add-task');
+      var addTaskButton = document.getElementById('button-add-task');
       var addTaskPopupButton = document.getElementById('button-add-task-popup');
       var cancelTaskPopupButton = document.getElementById('button-cancel-task-popup');
       var addTaskPopupInput = document.getElementById('input-add-task-popup');
+      addTaskButton.addEventListener('click', UI.openAddTaskPopup);
+      addTaskPopupButton.addEventListener('click', UI.addTask);
+      cancelTaskPopupButton.addEventListener('click', UI.closeAddTaskPopup);
+      addTaskPopupInput.addEventListener('keypress', UI.handleAddTaskPopupInput);
+    }
+  }, {
+    key: "openAddTaskPopup",
+    value: function openAddTaskPopup() {
+      var addTaskPopup = document.getElementById('add-task-popup');
+      var addTaskButton = document.getElementById('button-add-task');
+      UI.closeAllPopups();
+      addTaskPopup.classList.add('active');
+      addTaskButton.classList.add('active');
+    }
+  }, {
+    key: "closeAddTaskPopup",
+    value: function closeAddTaskPopup() {
+      var addTaskPopup = document.getElementById('add-task-popup');
+      var addTaskButton = document.getElementById('button-add-task');
+      var addTaskInput = document.getElementById('input-add-task-popup');
+      addTaskPopup.classList.remove('active');
+      addTaskButton.classList.remove('active');
+      addTaskInput.value = '';
+    }
+  }, {
+    key: "addTask",
+    value: function addTask() {
+      var projectName = document.getElementById('project-name').textContent;
+      var addTaskPopupInput = document.getElementById('input-add-task-popup');
+      var taskName = addTaskPopupInput.value;
+
+      if (taskName === '') {
+        alert("Task name can't be empty");
+        return;
+      }
+
+      if (_Storage["default"].getTodoList().getProject(projectName).contains(taskName)) {
+        alert("Task names must be different");
+        addTaskPopupInput.value = '';
+        return;
+      }
+
+      _Storage["default"].addTask(projectName, new _Task["default"](taskName));
+
+      UI.createTask(taskName, "No Date");
+      UI.closeAddTaskPopup();
+    }
+  }, {
+    key: "handleAddTaskPopupInput",
+    value: function handleAddTaskPopupInput(e) {
+      if (e.key === 'Enter') UI.addTask();
+    } // TASK EVENT LISTENERS
+
+  }, {
+    key: "iniTaskButtons",
+    value: function iniTaskButtons() {
+      var taskButtons = document.querySelectorAll('[data-task-button]');
+      var taskNameInputs = document.querySelectorAll('[data-input-task-name]');
+      var dueDateInputs = document.querySelectorAll('[data-input-due-date]');
+      taskButtons.forEach(function (taskButton) {
+        return taskButton.addEventListener('click', UI.handleTaskButton);
+      });
+      taskNameInputs.forEach(function (taskNameInput) {
+        return taskNameInput.addEventListener('keypress', UI.renameTask);
+      });
+      dueDateInputs.forEach(function (dueDateInput) {
+        return dueDateInput.addEventListener('click', UI.setTaskDate);
+      });
+    }
+  }, {
+    key: "handleTaskButton",
+    value: function handleTaskButton(e) {
+      if (e.target.classList.contains('fa-circle')) {
+        UI.setTaskCompleted(this);
+        return;
+      }
+
+      if (e.target.classList.contains('fa-times')) {
+        UI.deleteTask(this);
+        return;
+      }
+
+      if (e.target.classList.contains('task-content')) {
+        UI.openRenameInput(this);
+        return;
+      }
+
+      if (e.target.classList.contains('due-date')) UI.openSetDateInput(this);
+    }
+  }, {
+    key: "setTaskCompleted",
+    value: function setTaskCompleted(taskButton) {
+      var projectName = document.getElementById('project-name').textContent;
+      var taskName = taskButton.children[0].children[1].textContent;
+
+      if (projectName === 'Today' || projectName === 'This Week') {
+        var mainProjectName = taskName.split('('[1].split(')')[0]);
+      }
     }
   }]);
 
